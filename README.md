@@ -36,7 +36,7 @@ In our implementation, we will explore various features of Azure Synapse Analyti
 
 ## Solution architecture
 
-![Architecture diagram explained in the next paragraph.](media/archdiagram.png "Architecture Diagram")
+![Architecture diagram explained in the next paragraph.](media/architecture-mdw.png "Architecture Diagram")
 
 This walk through leverages the lambda architecture pattern, to handle the ingestion, processing, and analysis of data. We will explore:
 * Batch processing of big data sources at rest.
