@@ -8,7 +8,7 @@ With Azure Synapse platform Serverless SQL Pools, WWI can migrate their existing
 **Contents** 
 
 <!-- TOC -->
-- [Azure Synapse Analytics and AI hands-on lab step-by-step](#azure-synapse-analytics-and-ai-hands-on-lab-step-by-step)
+- [Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machie Learning step-by-step](#two-by-one-modern-data-warehousing-step-by-step)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
   - [Overview](#overview)
   - [Solution architecture](#solution-architecture)
