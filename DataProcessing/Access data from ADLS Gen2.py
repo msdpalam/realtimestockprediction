@@ -23,7 +23,7 @@ spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "false")
 # MAGIC %scala
 # MAGIC val storageAccountName = "adls2b1"
 # MAGIC val appID = "16323797-6396-4120-985b-6f25d2819759"
-# MAGIC val secret = "yf~8Q~4mWhDDFqGFLx1tzoZgez9ElT1YspSxrblh"
+# MAGIC val secret = "*****************************8"
 # MAGIC val fileSystemName = "adls2b1fs"
 # MAGIC val tenantID = "72f988bf-86f1-41af-91ab-2d7cd011db47"
 # MAGIC 
