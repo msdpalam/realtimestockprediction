@@ -11,14 +11,6 @@
   - [Resource naming throughout this lab](#resource-naming-throughout-this-lab)
   - [Exercise 1: Accessing the Azure Synapse Analytics workspace](#exercise-1-accessing-the-azure-synapse-analytics-workspace)
     - [Task 1: Launching Synapse Studio](#task-1-launching-synapse-studio)
-  - [Exercise 2: Create and populate the supporting tables in the SQL Pool](#exercise-2-create-and-populate-the-supporting-tables-in-the-sql-pool)
-    - [Task 1: Create the sale table](#task-1-create-the-sale-table)
-    - [Task 2: Populate the sale table](#task-2-populate-the-sale-table)
-    - [Task 3: Create the customer information table](#task-3-create-the-customer-information-table)
-    - [Task 4: Populate the customer information table](#task-4-populate-the-customer-information-table)
-    - [Task 5: Create the campaign analytics table](#task-5-create-the-campaign-analytics-table)
-    - [Task 6: Populate the campaign analytics table](#task-6-populate-the-campaign-analytics-table)
-    - [Task 7: Populate the product table](#task-7-populate-the-product-table)
  
 <!-- /TOC -->
 
@@ -34,17 +26,40 @@ With Azure Synapse platform Serverless SQL Pools, WWI can migrate their existing
 
 ## Abstract and learning objectives
 
-In this hands-on-lab, you will build an end-to-end data analytics with machine learning solution using Azure Synapse Analytics. The information will be presented in the context of a retail scenario. We will be heavily leveraging Azure Synapse Studio, a tool that conveniently unifies the most common data operations from ingestion, transformation, querying, and visualization.
+In this mission is to show case how we can build an end-to-end data advanced analytics solution using Azure Synapse Analytics, Azure Databricks and Azure Machine Learning services. The information will be presented in the context of a retail scenario, as described above. We will be heavily leveraging Azure Synapse Studio, Azure Databricks and Azure Machine Learning Studio as our development tools as we walk through common data operations from ingestion, transformation, querying, model training and visualization. While we can leverage Azure Synapse for all data engineering and data science activites, we wanted to build a scenario where multiple Azure Services could be leveraged to implement the solution, as we see our customers ask for alternate options when building advanced analytics solutions in Azure.
 
 ## Overview
 
-In this lab various features of Azure Synapse Analytics will be explored. Azure Synapse Analytics Studio is a single tool that every team member can use collaboratively. Synapse Studio will be the only tool used throughout this lab through data ingestion, cleaning, and transforming raw files to using Notebooks to train, register, and consume a Machine learning model. The lab will also provide hands-on-experience monitoring and prioritizing data related workloads.
+In our implementation, we will explore various features of Azure Synapse Analytics, Azure Databricks and Azure Machine Learning Services. Azure Synapse Analytics Studio is a single tool that every team member can use collaboratively, for data engineering needs. We will however leverage Azure Databricks alnog with Synapse Studio, as we ingest, clean, and transform raw data.  We will then leverage Azure Machine Learning Studio to train, register, and consume a Machine learning model. We would like to have hands-on-experience building this solution.
+
+
 
 ## Solution architecture
 
 ![Architecture diagram explained in the next paragraph.](media/archdiagram.png "Architecture Diagram")
 
-This lab explores the cold data scenario of ingesting various types of raw data files. These files can exist anywhere. The file types used in this lab are CSV, parquet, and JSON. This data will be ingested into Synapse Analytics via Pipelines. From there, the data can be transformed and enriched using various tools such as data flows, Synapse Spark, and Synapse SQL (both provisioned and serverless). Once processed, data can be queried using Synapse SQL tooling. Azure Synapse Studio also provides the ability to author notebooks to further process data, create datasets, train, and create machine learning models. These models can then be stored in a storage account or even in a SQL table. These models can then be consumed via various methods, including T-SQL. The foundational component supporting all aspects of Azure Synapse Analytics is the ADLS Gen 2 Data Lake.
+This walk through leverages the lambda architecture pattern, to handle the ingestion, processing, and analysis of data. We will explore:
+* Batch processing of big data sources at rest.
+* Real-time processing of big data in motion.
+
+### Batch Analytics
+For Batch Analytics we will work with relational data.
+* We first restored WWImporter database to Azure SQL DB and ran stored procedures to get data through the current date
+* We designed a meta-data driven Pipeline approach for loading data from Azure SQL DB to ADLS; this required a small Azure SQL DB to store the data loading logic in a table
+* Azure Synapse Pipelines read data from the data load definition database and performs either Copy Data Activities for full-load tables or Dataflow Activities for incremental updates to load the data from the WWImporter Database to Parquet files in ADLS (Bronze Layer)
+* A Spark Notebook contains python code to extract the current WWI Stock price throughout the day – this data is used to see if there is any correlation between sales and the stock price as well as get near real time updates of the WWI stock price; The latest stock price for each day is also stored in ADLS
+* Serverless SQL Database contains views over the ADLS files to denormalize the data into a Star Schema
+* Power BI is leveraged to create a dataset from the SQL Serverless database views along with the reports needed by the end users; The end users will be able to see near-real time orders throughout the day*
+
+### Real-time Analytics
+For real-time analytics scenario, we will leverage yahoo API to generate the real-time data for a date range and stream the data as events.
+* To demonstrate real-time analytics capabilities under the same Azure Synapse platform, we are leveraging a data ingestion pipeline through Azure Event Hub. A small program creates an event for rows of data, from yahoo finances snapped for a date range. Once the event shows up, Azure Stream Analytics processes the data and puts the data into Azure Data Lake Store (ADLS Gen2).
+* As part of Data Engineering, Azure Databricks mounts the store in Databricks and processes data so we have a prepared dataset that we can build model on. This process is kicked off through Azure Synapse Pipeline (Mount Pipeline + Data Processing Pipeline)
+
+### Machine Learning
+* Azure ML picks up the data from ADLS store, trains a model and deploys the model to Azure Container Instance, as a real time endpoint, to predict on the stock price closing trends
+
+The data files we generate during the ingestion and processing will be CSV, and parquet. This data will be ingested into Synapse Analytics via Pipelines. From there, the data can be transformed and enriched using various tools such as data flows, Synapse Spark, Azure Datbricks, and Synapse SQL (both provisioned and serverless). Once processed, data can be queried using Synapse SQL tooling. Azure Synapse Studio also provides the ability to author notebooks to further process data, create datasets, train, and create machine learning models. These models can then be stored in a storage account or even in a SQL table. These models can then be consumed via various methods, including T-SQL. The foundational component supporting all aspects of Azure Synapse Analytics is the ADLS Gen 2 Data Lake.
 
 ## Requirements
 
