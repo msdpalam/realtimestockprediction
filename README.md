@@ -20,7 +20,7 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
   - [Resource naming throughout this lab](#resource-naming-throughout-this-lab)
-  - [Exercise 1: Accessing the Azure Synapse Analytics workspace](#exercise-1-accessing-the-azure-synapse-analytics-workspace)
+  - [Exercise 1: Prepare the workload environment](#exercise-1-prepare-the-workload-environment---create-resources-for-the-solution)
     - [Task 1: Create Azure Synapse Workspace](#task-1-create-azure-synapse-workspace)
     - [Task 2: Create Azure Databricks Workspace](#task-2-create-azure-databricks-workspace)
     - [Task 3: Create Azure Machine Learning Workspace](#task-3-create-azure-machine-learning-workspace)
