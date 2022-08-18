@@ -11,6 +11,7 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
 **Walkthrough Flows** 
 
 <!-- TOC -->
+- [About World Wide Importers](#world-wide-importers)
 - [Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machie Learning step-by-step](#modern-data-warehousing-and-machine-learning-with-azure-synapse-analytics-and-azure-machie-learning-step-by-step)
   - [Scenario](#scenario)
   - [Abstract and learning objectives](#abstract-and-learning-objectives)
@@ -21,7 +22,8 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
   - [Resource naming throughout this lab](#resource-naming-throughout-this-lab)
   - [Exercise 1: Accessing the Azure Synapse Analytics workspace](#exercise-1-accessing-the-azure-synapse-analytics-workspace)
     - [Task 1: Create Azure Synapse Workspace](#task-1-create-azure-synapse-workspace)
-    - [Task 2: Create ](#task-2-create-azure-databricks-workspace)
+    - [Task 2: Create Azure Databricks Workspace](#task-2-create-azure-databricks-workspace)
+    - [Task 3: Create Azure Machine Learning Workspace](#task-3-create-azure-machine-learning-workspace)
  
 <!-- /TOC -->
 
