@@ -59,24 +59,7 @@ Our solution leverages the lambda architecture pattern, to handle the ingestion,
 * Batch processing of big data sources at rest.
 * Real-time processing of big data in motion.
 
-### Batch Analytics
-For Batch Analytics we will work with relational data.
-* We first restored WWImporter database to Azure SQL DB and ran stored procedures to get data through the current date
-* We designed a meta-data driven Pipeline approach for loading data from Azure SQL DB to ADLS; this required a small Azure SQL DB to store the data loading logic in a table
-* Azure Synapse Pipelines read data from the data load definition database and performs either Copy Data Activities for full-load tables or Dataflow Activities for incremental updates to load the data from the WWImporter Database to Parquet files in ADLS (Bronze Layer)
-* A Spark Notebook contains python code to extract the current WWI Stock price throughout the day – this data is used to see if there is any correlation between sales and the stock price as well as get near real time updates of the WWI stock price; The latest stock price for each day is also stored in ADLS
-* Serverless SQL Database contains views over the ADLS files to denormalize the data into a Star Schema
-* Power BI is leveraged to create a dataset from the SQL Serverless database views along with the reports needed by the end users; The end users will be able to see near-real time orders throughout the day*
-
-### Real-time Analytics
-For real-time analytics scenario, we will leverage yahoo API to generate the real-time data for a date range and stream the data as events.
-* To demonstrate real-time analytics capabilities under the same Azure Synapse platform, we are leveraging a data ingestion pipeline through Azure Event Hub. A small program creates an event for rows of data, from yahoo finances snapped for a date range. Once the event shows up, Azure Stream Analytics processes the data and puts the data into Azure Data Lake Store (ADLS Gen2).
-* As part of Data Engineering, Azure Databricks mounts the store in Databricks and processes data so we have a prepared dataset that we can build model on. This process is kicked off through Azure Synapse Pipeline (Mount Pipeline + Data Processing Pipeline)
-
-### Machine Learning
-* Azure ML picks up the data from ADLS store, trains a model and deploys the model to Azure Container Instance, as a real time endpoint, to predict on the stock price closing trends
-
-The data files we generate during the ingestion and processing will be CSV, and parquet. This data will be ingested into Synapse Analytics via Pipelines. From there, the data can be transformed and enriched using various tools such as data flows, Synapse Spark, Azure Datbricks, and Synapse SQL (both provisioned and serverless). Once processed, data can be queried using Synapse SQL tooling. Azure Synapse Studio also provides the ability to author notebooks to further process data, create datasets, train, and create machine learning models. These models can then be stored in a storage account or even in a SQL table. These models can then be consumed via various methods, including T-SQL. The foundational component supporting all aspects of Azure Synapse Analytics is the ADLS Gen 2 Data Lake.
+We will have the detailed implementation steps in the relevant section below for pattern for World Wide Importers.
 
 ## Requirements
 
@@ -133,6 +116,20 @@ For our machine learning needs, we will leverage Azure Machine Learning, as we s
 
 ## Exercise 2: Implement End to End Batch Analytics Solution
 
+For Batch Analytics we will work with relational data.
+* We first restored WWImporter database to Azure SQL DB and ran stored procedures to get data through the current date
+* We designed a meta-data driven Pipeline approach for loading data from Azure SQL DB to ADLS; this required a small Azure SQL DB to store the data loading logic in a table
+* Azure Synapse Pipelines read data from the data load definition database and performs either Copy Data Activities for full-load tables or Dataflow Activities for incremental updates to load the data from the WWImporter Database to Parquet files in ADLS (Bronze Layer)
+* A Spark Notebook contains python code to extract the current WWI Stock price throughout the day – this data is used to see if there is any correlation between sales and the stock price as well as get near real time updates of the WWI stock price; The latest stock price for each day is also stored in ADLS
+* Serverless SQL Database contains views over the ADLS files to denormalize the data into a Star Schema
+* Power BI is leveraged to create a dataset from the SQL Serverless database views along with the reports needed by the end users; The end users will be able to see near-real time orders throughout the day*
+
 ## Exercise 3: Implement End to End Real Analytics Solution
+For real-time analytics scenario, we will leverage yahoo API to generate the real-time data for a date range and stream the data as events.
+* To demonstrate real-time analytics capabilities under the same Azure Synapse platform, we are leveraging a data ingestion pipeline through Azure Event Hub. A small program creates an event for rows of data, from yahoo finances snapped for a date range. Once the event shows up, Azure Stream Analytics processes the data and puts the data into Azure Data Lake Store (ADLS Gen2).
+* As part of Data Engineering, Azure Databricks mounts the store in Databricks and processes data so we have a prepared dataset that we can build model on. This process is kicked off through Azure Synapse Pipeline (Mount Pipeline + Data Processing Pipeline)
 
 ## Exercise 4: Train, Score and Consume Machine Learning Model
+* Azure ML picks up the data from ADLS store, trains a model and deploys the model to Azure Container Instance, as a real time endpoint, to predict on the stock price closing trends
+
+The data files we generate during the ingestion and processing will be CSV, and parquet. This data will be ingested into Synapse Analytics via Pipelines. From there, the data can be transformed and enriched using various tools such as data flows, Synapse Spark, Azure Datbricks, and Synapse SQL (both provisioned and serverless). Once processed, data can be queried using Synapse SQL tooling. Azure Synapse Studio also provides the ability to author notebooks to further process data, create datasets, train, and create machine learning models. These models can then be stored in a storage account or even in a SQL table. These models can then be consumed via various methods, including T-SQL. The foundational component supporting all aspects of Azure Synapse Analytics is the ADLS Gen 2 Data Lake.
