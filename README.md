@@ -24,6 +24,9 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
     - [Task 1: Create Azure Synapse Workspace](#task-1-create-azure-synapse-workspace)
     - [Task 2: Create Azure Databricks Workspace](#task-2-create-azure-databricks-workspace)
     - [Task 3: Create Azure Machine Learning Workspace](#task-3-create-azure-machine-learning-workspace)
+  - [Excercise 2: Implement End to End Batch Analytics Solution](#exercise-2-implement-end-to-end-batch-analytics-solution)
+  - [Exercise 3: Implement End to End Real Time Analytics Pipeline](#exercise-3-implement-end-to-end-real-analytics-solution)
+  - [Exercise 4: Train, score and consume Machine Learning Model](#exercise-4-train-score-and-consume-machine-learning-model)
  
 <!-- /TOC -->
 
@@ -128,3 +131,8 @@ Use the Azure portal to create an Azure Databricks workspace with an Apache Spar
 
 For our machine learning needs, we will leverage Azure Machine Learning, as we see customers love the machine learning studio for model training and inferencing. Use [Quickstart: Create workspace resources you need to get started with Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/quickstart-create-resources)
 
+## Exercise 2: Implement End to End Batch Analytics Solution
+
+## Exercise 3: Implement End to End Real Analytics Solution
+
+## Exercise 4: Train, Score and Consume Machine Learning Model
