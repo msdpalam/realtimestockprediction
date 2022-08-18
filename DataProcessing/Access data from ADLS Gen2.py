@@ -2,7 +2,7 @@
 # DBTITLE 1,Configure authentication for mounting
 configs = {"fs.azure.account.auth.type": "OAuth",
            "fs.azure.account.oauth.provider.type": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
-           "fs.azure.account.oauth2.client.id": "16323797-6396-4120-985b-6f25d2819759",
+           "fs.azure.account.oauth2.client.id": "appID",
            "fs.azure.account.oauth2.client.secret": dbutils.secrets.get(scope="key-vault-secrets-2by1-mdw",key="SP-Client-Key"),
            "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/<tenantID>/oauth2/token"}
 
