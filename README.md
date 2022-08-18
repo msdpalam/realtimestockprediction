@@ -30,7 +30,7 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
 # Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machie Learning step-by-step
 
 ## Scenario
-Currently they have SQL Server based on premise data warehouse solution. They are working on modernizing the solution in the cloud. They reached out to FastTrack for Azure team to help implement a modern data housing solution/POC in Azure, leveraging Azure Synapse, Azure ML for Machine Learning, Azure Databricks and Power BI.
+Currently, WWI has SQL Server based on premises data warehouse solution. They are working on modernizing the solution in the cloud. They reached out to FastTrack for Azure team to help implement a modern data housing solution/POC in Azure, leveraging Azure Synapse, Azure ML for Machine Learning, Azure Databricks and Power BI.
 
 WWI would like to leverage one platform to achieve both their real time and batch analytics goals as part of there innovation and modernization efforts. They believe Azure Synapse Analytics can help them achieve that goal, implementing the solution through Lambda Architecture, a modern big data analytics patterns.
 
