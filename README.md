@@ -10,7 +10,8 @@
   - [Before the hands-on lab](#before-the-hands-on-lab)
   - [Resource naming throughout this lab](#resource-naming-throughout-this-lab)
   - [Exercise 1: Accessing the Azure Synapse Analytics workspace](#exercise-1-accessing-the-azure-synapse-analytics-workspace)
-    - [Task 1: Launching Synapse Studio](#task-1-launching-synapse-studio)
+    - [Task 1: Create Azure Synapse Workspace](#task-1-create-azure-synapse-workspace)
+    - [Task 2: Create ](#task-2-create-azure-databricks-workspace)
  
 <!-- /TOC -->
 
@@ -38,7 +39,8 @@ In our implementation, we will explore various features of Azure Synapse Analyti
 
 ![Architecture diagram explained in the next paragraph.](media/architecture-mdw.png "Architecture Diagram")
 
-This walk through leverages the lambda architecture pattern, to handle the ingestion, processing, and analysis of data. We will explore:
+Our solution leverages the lambda architecture pattern, to handle the ingestion, processing, and analysis of data. We will explore:
+
 * Batch processing of big data sources at rest.
 * Real-time processing of big data in motion.
 
@@ -95,39 +97,22 @@ Refer to the Before the hands-on lab setup guide manual before continuing to the
 
 ## Resource naming throughout this lab
 
-For the hands-on walk throughs, we recommend that you adopt a naming convention, following the guidelines in the article [Define your naming convention](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). We are going to use the following naming for our implementation
+For the hands-on walk throughs, we recommend that you adopt a naming convention, following the guidelines in the article [Define your naming convention](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). 
 
-| Azure Synapse Analytics Resource  | To be referred to                                                                  |
-|-----------------------------------|------------------------------------------------------------------------------------|
-| Azure Subscription                | `WorkspaceSubscription`                                                            |
-| Azure Region                      | `WorkspaceRegion`                                                                  |
-| Workspace resource group          | `rg2b1`                                                           |
-| Workspace / workspace name        | `asaws2b1`                                                             |
-| Primary Storage Account           | `adls2b1`                                                              |
-| SQL Serverless Endpoint           | `Built-in`                                                                  |
-| Azure Key Vault                   | `kv2b1`                                                              |
-
-## Exercise 1: Accessing the Azure Synapse Analytics workspace
+## Exercise 1: Prepare the workload environment - create resources for the solution
 
 
-In our walkthroughs, for Batch Analytics, we will leverage Azure Synapse Analytics Studio. For Data Engineering works, for real-time works, we will leverage Azure Databricks Activity. For machine learning activities, we will resort to Azure ML Studio.
+In our walkthroughs, we will need several resources to implement end to end real-time and batch analytics pipelines. For btch analytics, for example, we will leverage Azure Synapse Analytics Studio. For Data Engineering works, for real-time works, we will leverage Azure Databricks Activity. For machine learning activities, we will resort to Azure ML Studio. In this exercise, we will provision the necessary resources for our solution. We will first introduce the major services involved and then bring the other services we need in the picture.
 
-### Task 1: Launching Synapse Studio
+### Task 1: Create Azure Synapse Workspace
 
-1. Log into the [Azure Portal](https://portal.azure.com).
+Following [Quickstart: Create a Synapse workspace](https://docs.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-workspace), create your Azure Synapse Workspace. Please note that we are creating other resources like Azure Data Lake Store Gen2 for storage needs
 
-2. Expand the left menu, and select the **Resource groups** item.
-  
-    ![The Azure Portal left menu is expanded with the Resource groups item highlighted.](media/azureportal_leftmenu_resourcegroups.png "Azure Portal Resource Groups menu item")
+### Task 2: Create Azure Databricks Workspace
 
-3. From the list of resource groups, select `rg2b1`.
-  
-4. From the list of resources, select the **Synapse Workspace** resource, `asaws2b1s`.
-  
-    ![In the resource list, the Synapse Workspace item is selected.](media/resourcelist_synapseworkspace.png "The resource group listing")
+Use the Azure portal to create an Azure Databricks workspace with an Apache Spark cluster. For detailed steps, follow the article [Quickstart: Run a Spark job on Azure Databricks Workspace using the Azure portal](https://docs.microsoft.com/en-us/azure/databricks/scenarios/quickstart-create-databricks-workspace-portal?tabs=azure-portal)
 
-5. On the **Overview** tab of the Synapse Workspace page, select the **Open Synapse Studio** card from beneath the **Getting Started** heading. Alternatively, you can select the Workspace web URL link.
+### Task 3: Create Azure Machine Learning Workspace
 
-    ![On the Synapse workspace resource screen, the Overview pane is shown with the Open Synapse Studio card highlighted. The Workspace web URL value is also highlighted.](media/workspaceresource_launchsynapsestudio.png "Launching Synapse Studio")
-
+For our machine learning needs, we will leverage Azure Machine Learning, as we see customers love the machine learning studio for model training and inferencing. Use [Quickstart: Create workspace resources you need to get started with Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/quickstart-create-resources)
 
