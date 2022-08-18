@@ -4,7 +4,7 @@ configs = {"fs.azure.account.auth.type": "OAuth",
            "fs.azure.account.oauth.provider.type": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
            "fs.azure.account.oauth2.client.id": "16323797-6396-4120-985b-6f25d2819759",
            "fs.azure.account.oauth2.client.secret": dbutils.secrets.get(scope="key-vault-secrets-2by1-mdw",key="SP-Client-Key"),
-           "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"}
+           "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/<tenantID>/oauth2/token"}
 
 # COMMAND ----------
 
@@ -12,20 +12,20 @@ service_credential = dbutils.secrets.get(scope="key-vault-secrets-2by1-mdw",key=
 
 spark.conf.set("fs.azure.account.auth.type.adls2b1.dfs.core.windows.net", "OAuth")
 spark.conf.set("fs.azure.account.oauth.provider.type.adls2b1.dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
-spark.conf.set("fs.azure.account.oauth2.client.id.adls2b1.dfs.core.windows.net", "16323797-6396-4120-985b-6f25d2819759")
+spark.conf.set("fs.azure.account.oauth2.client.id.adls2b1.dfs.core.windows.net", "appID/clientID")
 spark.conf.set("fs.azure.account.oauth2.client.secret.adls2b1.dfs.core.windows.net", service_credential)
-spark.conf.set("fs.azure.account.oauth2.client.endpoint.adls2b1.dfs.core.windows.net", "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
+spark.conf.set("fs.azure.account.oauth2.client.endpoint.adls2b1.dfs.core.windows.net", "https://login.microsoftonline.com/<tenantID>/oauth2/token")
 dbutils.fs.ls("abfss://" + fileSystemName  + "@" + storageAccountName + ".dfs.core.windows.net/")
 spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "false")
 
 # COMMAND ----------
 
 # MAGIC %scala
-# MAGIC val storageAccountName = "adls2b1"
-# MAGIC val appID = "16323797-6396-4120-985b-6f25d2819759"
+# MAGIC val storageAccountName = "storageAccountName"
+# MAGIC val appID = "appID/clientID"
 # MAGIC val secret = "*****************************8"
-# MAGIC val fileSystemName = "adls2b1fs"
-# MAGIC val tenantID = "72f988bf-86f1-41af-91ab-2d7cd011db47"
+# MAGIC val fileSystemName = "fsName"
+# MAGIC val tenantID = "***************"
 # MAGIC 
 # MAGIC spark.conf.set("fs.azure.account.auth.type." + storageAccountName + ".dfs.core.windows.net", "OAuth")
 # MAGIC spark.conf.set("fs.azure.account.oauth.provider.type." + storageAccountName + ".dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
