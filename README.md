@@ -67,46 +67,50 @@ The data files we generate during the ingestion and processing will be CSV, and 
 
 2. Azure Synapse Workspace / Studio
 
-3. [Python v.3.7 or newer](https://www.python.org/downloads/)
+3. Azure Databricks
 
-4. [PIP](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip)
+4. Azure Machine Learning Workspace / Studio
 
-5. [Visual Studio Code](https://code.visualstudio.com/)
+5. [Python v.3.7 or newer](https://www.python.org/downloads/)
 
-6. [Python Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+6. [PIP](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip)
 
-7. [Azure Function Core Tools v.3](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
+7. [Visual Studio Code](https://code.visualstudio.com/)
 
-8. [Azure Functions Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+8. [Python Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 
-9. [Postman](https://www.postman.com/downloads/)
+9. Azure Function Core Tools v.3](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
 
-10. [Ensure the Microsoft.Sql resource provider is registered in your Azure Subscription](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types).
+10. [Azure Functions Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 
-## Before the hands-on lab
+11. [Postman](https://www.postman.com/downloads/)
+
+12. [Ensure the Microsoft.Sql resource provider is registered in your Azure Subscription](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types).
+
+13. Azure Stream Analytics
+
+## Before the Journey
 
 Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
 
 ## Resource naming throughout this lab
 
-For the remainder of this lab, the following terms will be used for various ASA (Azure Synapse Analytics) related resources (make sure you replace them with actual names and values from your environment):
+For the hands-on walk throughs, we recommend that you adopt a naming convention, following the guidelines in the article [Define your naming convention](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). We are going to use the following naming for our implementation
 
 | Azure Synapse Analytics Resource  | To be referred to                                                                  |
 |-----------------------------------|------------------------------------------------------------------------------------|
 | Azure Subscription                | `WorkspaceSubscription`                                                            |
 | Azure Region                      | `WorkspaceRegion`                                                                  |
-| Workspace resource group          | `WorkspaceResourceGroup`                                                           |
-| Workspace / workspace name        | `asaworkspace{suffix}`                                                             |
-| Primary Storage Account           | `asadatalake{suffix}`                                                              |
-| Default file system container     | `DefaultFileSystem`                                                                |
-| SQL Pool                          | `SqlPool01`                                                                        |
-| SQL Serverless Endpoint           | `SqlServerless01`                                                                  |
-| Azure Key Vault                   | `asakeyvault{suffix}`                                                              |
+| Workspace resource group          | `rg2b1`                                                           |
+| Workspace / workspace name        | `asaws2b1`                                                             |
+| Primary Storage Account           | `adls2b1`                                                              |
+| SQL Serverless Endpoint           | `Built-in`                                                                  |
+| Azure Key Vault                   | `kv2b1`                                                              |
 
 ## Exercise 1: Accessing the Azure Synapse Analytics workspace
 
 
-All exercises in this lab utilize the workspace Synapse Studio user interface. This exercise will outline the steps to launch Synapse Studio. Unless otherwise specified, all instruction including menu navigation will occur in Synapse Studio.
+In our walkthroughs, for Batch Analytics, we will leverage Azure Synapse Analytics Studio. For Data Engineering works, for real-time works, we will leverage Azure Databricks Activity. For machine learning activities, we will resort to Azure ML Studio.
 
 ### Task 1: Launching Synapse Studio
 
@@ -116,9 +120,9 @@ All exercises in this lab utilize the workspace Synapse Studio user interface. T
   
     ![The Azure Portal left menu is expanded with the Resource groups item highlighted.](media/azureportal_leftmenu_resourcegroups.png "Azure Portal Resource Groups menu item")
 
-3. From the list of resource groups, select `WorkspaceResourceGroup`.
+3. From the list of resource groups, select `rg2b1`.
   
-4. From the list of resources, select the **Synapse Workspace** resource, `asaworkspace{suffix}`.
+4. From the list of resources, select the **Synapse Workspace** resource, `asaws2b1s`.
   
     ![In the resource list, the Synapse Workspace item is selected.](media/resourcelist_synapseworkspace.png "The resource group listing")
 
