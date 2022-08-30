@@ -126,7 +126,7 @@ For Batch Analytics we will work with relational data.
 * Serverless SQL Database contains views over the ADLS files to denormalize the data into a Star Schema
 * Power BI is leveraged to create a dataset from the SQL Serverless database views along with the reports needed by the end users; The end users will be able to see near-real time orders throughout the day*
 
-## Exercise 3: Implement End to End Real Analytics Solution
+## Exercise 3: Implement End to End Real Time Analytics Solution
 For real-time analytics scenario, we will leverage yahoo API to generate the real-time data for a date range and stream the data as events.
 * To demonstrate real-time analytics capabilities under the same Azure Synapse platform, we are leveraging a data ingestion pipeline through Azure Event Hub. A small program creates an event for rows of data, from yahoo finances snapped for a date range. Once the event shows up, Azure Stream Analytics processes the data and puts the data into Azure Data Lake Store (ADLS Gen2).
 * As part of Data Engineering, Azure Databricks mounts the store in Databricks and processes data so we have a prepared dataset that we can build model on. This process is kicked off through Azure Synapse Pipeline (Mount Pipeline + Data Processing Pipeline)
