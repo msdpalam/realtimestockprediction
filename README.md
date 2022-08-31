@@ -1,23 +1,23 @@
-# World Wide Importers
+# Modern Data Warehousing and Real-time Analytics with Azure Synapse Analytics and Azure Machine Learning
 
-Wide World Importers (WWI) is a wholesale novelty goods importer and distributor operating from the San Francisco bay area.
+This step-by-step learning guide takes you through World Wide Importers (WWI) journey to modernize their reporting and analytics environment to a cloud based Analytics platform for both batch and real-time analytics. In the lessons that follow you will learn to:
 
-As a wholesaler, WWI's customers are mostly companies who resell to individuals. WWI sells to retail customers across the United States, including specialty stores, supermarkets, computing stores, tourist attraction shops, and some individuals. WWI sells to other wholesalers via a network of agents who promote the products on WWI's behalf. While all of WWI's customers are currently based in the United States, the company intends to expand into other countries.
+* Build a meta-data driven pipeline for Synapse Analytics Pipelines and Dataflows, landing data in Azure Data Lake Storage(ADLS)
+* Design a logical Enterprise Data Warehouse with Azure Synapse Serverless Pool
+* Use Synapse Spark Pools and Notebooks to load data from cloud APIs
+* Leverage Power BI to build datasets and reports for near real-time analytics from the Synapse Serverless Analytics endpoint
+* Ingest data for real-time analytics using:
+  * Azure Event Hub and Azure Stream Analytics
+  * Azure Databricks with Azure Synapse Pipelines
+  * Azure Synapse Analytics Dataflows and Pipelines
+* Develop and training a machine learning model with Azure Machine Learning
+* Evaluate the machine learning model with Power BI
 
-WWI buys goods from suppliers, including novelty and toy manufacturers, and other novelty wholesalers. They stock the goods in their WWI warehouse and reorder from suppliers as needed to fulfill customer orders. They also purchase large volumes of packaging materials and sell these in smaller quantities as a convenience for the customers.
-
-Recently WWI started to sell a variety of edible novelties such as chili chocolates. The company previously did not have to handle chilled items. To meet food handling requirements, they must monitor the temperature in their chiller room and any of their trucks that have chiller sections.
-
-**Walkthrough Flows** 
-
+**Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machine Learning step-by-step** 
 <!-- TOC -->
-- [About World Wide Importers](#world-wide-importers)
-- [Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machie Learning step-by-step](#modern-data-warehousing-and-machine-learning-with-azure-synapse-analytics-and-azure-machie-learning-step-by-step)
-  - [Scenario](#scenario)
-  - [Abstract and learning objectives](#abstract-and-learning-objectives)
-  - [Overview](#overview)
-  - [Solution architecture](#solution-architecture)
-  - [Requirements](#requirements)
+ * [Scenario](#scenario)
+ * [Solution architecture](#solution-architecture)
+ * [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
   - [Resource naming throughout this lab](#resource-naming-throughout-this-lab)
   - [Exercise 1: Prepare the workload environment](#exercise-1-prepare-the-workload-environment---create-resources-for-the-solution)
@@ -27,82 +27,64 @@ Recently WWI started to sell a variety of edible novelties such as chili chocola
   - [Excercise 2: Implement End to End Batch Analytics Solution](#exercise-2-implement-end-to-end-batch-analytics-solution)
   - [Exercise 3: Implement End to End Real Time Analytics Pipeline](#exercise-3-implement-end-to-end-real-analytics-solution)
   - [Exercise 4: Train, score and consume Machine Learning Model](#exercise-4-train-score-and-consume-machine-learning-model)
- 
 <!-- /TOC -->
 
 # Modern Data Warehousing and Machine Learning with Azure Synapse Analytics and Azure Machie Learning step-by-step
 
 ## Scenario
-Currently, WWI has SQL Server based on premises data warehouse solution. They are working on modernizing the solution in the cloud. They reached out to FastTrack for Azure team to help implement a modern data housing solution/POC in Azure, leveraging Azure Synapse, Azure ML for Machine Learning, Azure Databricks and Power BI.
 
-WWI would like to leverage one platform to achieve both their real time and batch analytics goals as part of there innovation and modernization efforts. They believe Azure Synapse Analytics can help them achieve that goal, implementing the solution through Lambda Architecture, a modern big data analytics patterns.
+Wide World Importers (WWI) is a wholesale novelty goods importer and distributor operating from the San Francisco bay area. They have an on-premises SQL Server data warehouse and are looking for a modern cloud-based solution for both batch and real-time data, ideally in a single platform.​
 
-With Azure Synapse platform Serverless SQL Pools, WWI can migrate their existing DW solution with few changes as well as get more frequent updates to their data for reporting  and analytics without the overhead of loading to Dedicated Pools. This will save costs while they further evaluate if, how and when the solution should be moved to a dedicated SQL Pool. Data processing for ML use cases, since they have a lots of realtime data, they wanted a scalable solution, where they can respond to the data growth needs without worrying about cost, whey they do not have any processing needed.
-![image](https://user-images.githubusercontent.com/12255455/185238457-ffef0780-3f9c-498e-8394-b50da2765d6e.png)
+WWI believe Azure Synapse Analytics is the right platform to achieve their goal of migrating their existing data warehouse to a more scalable and performant platform while providing new insights into their business by incorporating big data analytics.​
 
-## Abstract and learning objectives
+Azure offers multiple ways to transform data for Real Time Analytics; WII wanted to evaluate all options to see what was best for their team​
 
-In this mission is to show case how we can build an end-to-end data advanced analytics solution using Azure Synapse Analytics, Azure Databricks and Azure Machine Learning services. The information will be presented in the context of a retail scenario, as described above. We will be heavily leveraging Azure Synapse Studio, Azure Databricks and Azure Machine Learning Studio as our development tools as we walk through common data operations from ingestion, transformation, querying, model training and visualization. While we can leverage Azure Synapse for all data engineering and data science activites, we wanted to build a scenario where multiple Azure Services could be leveraged to implement the solution, as we see our customers ask for alternate options when building advanced analytics solutions in Azure.
-
-## Overview
-
-In our implementation, we will explore various features of Azure Synapse Analytics, Azure Databricks and Azure Machine Learning Services. Azure Synapse Analytics Studio is a single tool that every team member can use collaboratively, for data engineering needs. We will however leverage Azure Databricks alnog with Synapse Studio, as we ingest, clean, and transform raw data.  We will then leverage Azure Machine Learning Studio to train, register, and consume a Machine learning model. We would like to have hands-on-experience building this solution.
-
-
+​WWI engaged FastTrack for Azure to help implement an Azure modern data warehouse MVP leveraging Azure Synapse Analytics, Azure ML for Machine Learning, Azure Databricks and Power BI to meet their needs for both batch analytics and real-time big data analytics
 
 ## Solution architecture
 
 ![Architecture diagram explained in the next paragraph.](media/architecture-mdw.png "Architecture Diagram")
 
-Our solution leverages the lambda architecture pattern, to handle the ingestion, processing, and analysis of data. We will explore:
+The solution leverages the lambda architecture pattern to handle the ingestion, processing, and analysis of data. This includes:
 
 * Batch processing of big data sources at rest.
 * Real-time processing of big data in motion.
 
-We will have the detailed implementation steps in the relevant section below for pattern for World Wide Importers.
-
-The data files we generate during the ingestion and processing will be CSV, and parquet. This data will be ingested into Synapse Analytics via Pipelines. From there, the data can be transformed and enriched using various tools such as data flows, Synapse Spark, Azure Datbricks, and Synapse SQL (both provisioned and serverless). Once processed, data can be queried using Synapse SQL tooling. Azure Synapse Studio also provides the ability to author notebooks to further process data, create datasets, train, and create machine learning models. These models can then be stored in a storage account or even in a SQL table. These models can then be consumed via various methods, including T-SQL. The foundational component supporting all aspects of Azure Synapse Analytics is the ADLS Gen 2 Data Lake.
+Detailed implementation steps are provided in the relevant sections below for batch processing vs real-time analytics.
 
 ## Requirements
+This learning guide can followed and implemented in it's entirety or you can follow just the batch processing or just the real-time analytics exercises. 
 
-1. Microsoft Azure subscription
+For all exercises, the following is required:
 
-2. Azure Synapse Workspace / Studio
+1. Microsoft Azure Subscription
+2. Azure Synapse Analytics Workspace
+3. Azure Data Lake Storage (can be created automatically as part of your Azure Synapse Analytics Workspace deployment)
 
-3. Azure Databricks
+For Batch Analytics exercises, the following are also required:
 
-4. Azure Machine Learning Workspace / Studio
+1. Azure SQL Database
+2. Power BI Desktop
 
-5. [Python v.3.7 or newer](https://www.python.org/downloads/)
+For Real-Time Analytics exercises, the following are also required:
 
-6. [PIP](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip)
-
-7. [Visual Studio Code](https://code.visualstudio.com/)
-
-8. [Python Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-
-9. Azure Function Core Tools v.3](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
-
-10. [Azure Functions Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
-
-11. [Postman](https://www.postman.com/downloads/)
-
-12. [Ensure the Microsoft.Sql resource provider is registered in your Azure Subscription](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types).
-
-13. Azure Stream Analytics
-
-## Before the Journey
-
-Refer to the Before the hands-on lab setup guide manual before continuing to the lab exercises.
+1. Azure Databricks
+2. Azure Machine Learning Workspace / Studio
+3. [Python v.3.7 or newer](https://www.python.org/downloads/)
+4. [PIP](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip)
+5. [Visual Studio Code](https://code.visualstudio.com/)
+6. [Python Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+7. [Azure Function Core Tools v.3](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
+8. [Azure Functions Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+9. [Postman](https://www.postman.com/downloads/)
+10. Azure Stream Analytics
+10. [Ensure the Microsoft.Sql resource provider is registered in your Azure Subscription](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types).
 
 ## Resource naming throughout this lab
 
-For the hands-on walk throughs, we recommend that you adopt a naming convention, following the guidelines in the article [Define your naming convention](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). 
+For the hands-on walk through, we recommend that you adopt a naming convention, following the guidelines in the article [Define your naming convention](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). 
 
 ## Exercise 1: Prepare the workload environment - create resources for the solution
-
-
-In our walkthroughs, we will need several resources to implement end to end real-time and batch analytics pipelines. For btch analytics, for example, we will leverage Azure Synapse Analytics Studio. For Data Engineering works, for real-time works, we will leverage Azure Databricks Activity. For machine learning activities, we will resort to Azure ML Studio. In this exercise, we will provision the necessary resources for our solution. We will first introduce the major services involved and then bring the other services we need in the picture.
 
 ### Task 1: Create Azure Synapse Workspace
 
