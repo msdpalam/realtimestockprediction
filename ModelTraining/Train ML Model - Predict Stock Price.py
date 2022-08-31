@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %md 
+# MAGIC %md hi meer
 # MAGIC ## Databricks ML: Model Training - Predict Stock Price
 # MAGIC 
 # MAGIC In this notebook we train machine learning model based on our S&P data that we download (US SPX Data), to predict stock prices on the symbol SPX
