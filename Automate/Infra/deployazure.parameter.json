@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location":{
+          "value": "eastus"
+        },
+        "synapseWorkspaceName":{
+          "value": "twobyonesynws"
+        },
+        "sqlAdministratorUsername": {
+          "value" : "adminuser"
+        },
+        "sqlAdministratorPassword": {
+          "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        "defaultSynapseStorageAccountName":{
+          "value": "twob1store"
+        },
+        "defaultSynapseStorageAccountFileSystemName":{
+          "value": "twob1fs"
+        },
+        "storageAccountType":{
+          "value": "Standard_LRS"
+        },
+        "datalakeStoreName":{
+          "value": "twob1lake"
+        },
+        "mlKeyvaultName":{
+          "value": "twob1Keyvault"
+        },
+        "mlWorkspaceName":{
+          "value": "twob1MLWorkspace"
+        },
+        "mlStorageAccountName":{
+          "value": "twob1defaultmlstore"
+        },
+        "mlContainerRegistryName":{
+          "value": "twob1mlregistry"
+        },
+        "mlAppInsightName":{
+          "value": "twob1mlappinsight"
+        }
+    }
+}
