@@ -9,30 +9,94 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
 
-# Get the experiment run context
-run = Run.get_context()
+# Import libraries
+import mlflow
+import argparse
+import glob
+import os
 
-# load the diabetes dataset
-print("Loading Data...")
-stock_data = pd.read_csv('stock_data.csv')
 
-x= stock_data[['Open','High','Low']].values
-y= stock_data[['Close']].values
 
-x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,random_state=0)
+# define functions
+def main(args):
+    # enable auto logging
+    mlflow.autolog()
 
-model= LinearRegression()
-model.fit(x_train,y_train)
+    # read data
+    stock_data = get_csvs_df(args.training_data)
+    # load the diabetes dataset
+    # print("Loading Data...")
+    # stock_data = pd.read_csv('stock_data.csv')
 
-LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+    # process data
+    X_train, X_test, y_train, y_test = process_data(stock_data)
 
-# y_pred= model.predict(x_test)
+    # train model
+    train_model(X_train, X_test, y_train, y_test)
 
-# calculate accuracy
-y_hat= model.predict(x_test)
-acc = np.average(y_hat == y_test)
-print('Accuracy:', acc)
-run.log('Accuracy', np.float(acc))
+def get_csvs_df(path):
+    if not os.path.exists(path):
+        raise RuntimeError(f"Cannot use non-existent path provided: {path}")
+    csv_files = glob.glob(f"{path}/*.csv")
+    if not csv_files:
+        raise RuntimeError(f"No CSV files found in provided data path: {path}")
+    return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
+
+def process_data(stock_data):
+    # split dataframe into X and y
+    x= stock_data[['Open','High','Low']].values
+    y= stock_data[['Close']].values
+
+    x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,random_state=0)
+
+    # return splits and encoder
+    return x_train, x_test, y_train, y_test
+
+def train_model(x_train, x_test, y_train, y_test):
+    # train model
+    model= LinearRegression()
+    model.fit(x_train,y_train)
+    LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+    return model
+
+def parse_args():
+    # setup arg parser
+    parser = argparse.ArgumentParser()
+
+    # add arguments
+    parser.add_argument("--training_data", dest='training_data',
+                        type=str)
+    #parser.add_argument("--reg_rate", dest='reg_rate',
+    #                    type=float, default=0.01)
+
+    # parse args
+    args = parser.parse_args()
+
+    # return args
+    return args
+
+
+# run script
+if __name__ == "__main__":
+    # add space in logs
+    print("\n\n")
+    print("*" * 60)
+
+    # parse args
+    args = parse_args()
+
+    # run main function
+    main(args)
+
+    # add space in logs
+    print("*" * 60)
+    print("\n\n")
+
+
+#y_hat= model.predict(x_test)
+##acc = np.average(y_hat == y_test)
+#print('Accuracy:', acc)
+#run.log('Accuracy', np.float(acc))
 
 # # calculate AUC
 # y_scores = model.predict_proba(x_test)
@@ -41,7 +105,7 @@ run.log('Accuracy', np.float(acc))
 # run.log('AUC', np.float(auc))
 
 # Save the trained model in the outputs folder
-os.makedirs('outputs', exist_ok=True)
-joblib.dump(value=model, filename='outputs/stock_model.pkl')
+#os.makedirs('outputs', exist_ok=True)
+#joblib.dump(value=model, filename='outputs/stock_model.pkl')
 
-run.complete()
+#run.complete()
