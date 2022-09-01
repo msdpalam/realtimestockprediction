@@ -6,12 +6,12 @@ on:
       resource_group:
         description: 'Resource group name'
         required: true
-        default: 'rg-dev-mlops' 
+        default: 'aml-walkthrough-rg' 
         type: string
       aml_workspace:
         description: 'Azure Machine Learning workspace name'
         required: true
-        default: 'mlw-dev-mlops' 
+        default: 'aml-walkthrough-ws' 
         type: string
 
 jobs:
@@ -33,5 +33,5 @@ jobs:
     - name: Create dataset in Azure ML workspace
       run: |
         cd experimentation
-        az ml data create --name diabetes-folder --version 1 --path data
+        az ml data create --name stockdata-folder --version 1 --path data
 
