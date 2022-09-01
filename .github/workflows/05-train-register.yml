@@ -1,4 +1,4 @@
-name: Create Execute Job through ml
+name: Create Training Job through az ml
 
 on:
   workflow_dispatch:
