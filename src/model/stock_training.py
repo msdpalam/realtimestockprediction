@@ -91,21 +91,3 @@ if __name__ == "__main__":
     # add space in logs
     print("*" * 60)
     print("\n\n")
-
-
-#y_hat= model.predict(x_test)
-##acc = np.average(y_hat == y_test)
-#print('Accuracy:', acc)
-#run.log('Accuracy', np.float(acc))
-
-# # calculate AUC
-# y_scores = model.predict_proba(x_test)
-# auc = roc_auc_score(y_test,y_scores[:,1])
-# print('AUC: ' + str(auc))
-# run.log('AUC', np.float(auc))
-
-# Save the trained model in the outputs folder
-#os.makedirs('outputs', exist_ok=True)
-#joblib.dump(value=model, filename='outputs/stock_model.pkl')
-
-#run.complete()
