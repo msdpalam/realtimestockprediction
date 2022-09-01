@@ -33,5 +33,5 @@ jobs:
     - name: Submit Training Job
       run: |
         cd src
-        az ml job create --file job.yml --resource-group aml-walkthrough-ws --workspace-name mlw-dev-mlops
+        az ml job create --file job.yml --resource-group aml-walkthrough-rg --workspace-name aml-walkthrough-ws
 
